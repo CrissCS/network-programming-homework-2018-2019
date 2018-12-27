@@ -2,13 +2,16 @@ package com.fmi.mpr.hw.http.server.converters;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RequestToMapConverter {
   public Map<String, String> convert(String request) {
 
     Map<String, String> requestHeaders = new HashMap<>();
-
-    String[] requestLines = request.split("\n");
+    
+    Pattern pattern = Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
+    String header = pattern.split(request)[0];
+    String[] requestLines = header.split("\n");
     for (String requestLine : requestLines) {
       if (requestLine.equals("\r")) {
         continue;
@@ -23,6 +26,5 @@ public class RequestToMapConverter {
     }
 
     return requestHeaders;
-
   }
 }

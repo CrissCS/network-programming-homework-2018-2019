@@ -31,6 +31,7 @@ public class ServerWorker implements Runnable {
       try (BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
           PrintStream out = new PrintStream(clientSocket.getOutputStream())) {
         request = requestConverter.convert(in);
+        System.err.println(request);
         responseProcessor.process(out, request);
       } catch (IOException e) {
         e.printStackTrace();

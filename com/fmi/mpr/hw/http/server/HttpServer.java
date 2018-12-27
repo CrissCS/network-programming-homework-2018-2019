@@ -1,14 +1,19 @@
 package com.fmi.mpr.hw.http.server;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 import com.fmi.mpr.hw.http.server.converters.RequestToStringConverter;
+import com.fmi.mpr.hw.http.server.builder.DefaultResponseBuilder;
+import com.fmi.mpr.hw.http.server.builder.ResponseBuilder;
 import com.fmi.mpr.hw.http.server.converters.RequestToMapConverter;
 import com.fmi.mpr.hw.http.server.converters.RequestToResponseConverter;
 import com.fmi.mpr.hw.http.server.processors.DefaultResponseProcessor;
@@ -71,8 +76,9 @@ public class HttpServer {
           new RequestHeaderValueExtractor(requestToMapConverter, contentTypes);
       RequestToResponseConverter requestToResponseConverter =
           new RequestToResponseConverter(requestHeaderValueExtractor);
+      ResponseBuilder responseBuilder = new DefaultResponseBuilder(requestToResponseConverter, requestHeaderValueExtractor, contentTypes);
       ResponseProcessor responseProcessor =
-          new DefaultResponseProcessor(requestToResponseConverter, requestHeaderValueExtractor);
+          new DefaultResponseProcessor(responseBuilder);
 
       executorService.execute(new ServerWorker(clientSocket, requestConverter, responseProcessor));
     } catch (IOException e) {

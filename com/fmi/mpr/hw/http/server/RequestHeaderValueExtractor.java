@@ -1,6 +1,7 @@
 package com.fmi.mpr.hw.http.server;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 import com.fmi.mpr.hw.http.server.converters.RequestToMapConverter;
 
 public class RequestHeaderValueExtractor {
@@ -33,10 +34,8 @@ public class RequestHeaderValueExtractor {
   }
 
   public String getFullFileName(String request) {
-    String[] requestLines = request.split("\n");
-    String firstLine = requestLines[0];
-    String[] firstLineArguments = firstLine.split("\\s+");
-    String fileNameWithExtension = firstLineArguments[1].substring(1);
+    Map<String, String> headers = requestToMapConverter.convert(request);
+    String fileNameWithExtension = headers.get("get").split("\\s+")[0].substring(1).trim();
     return fileNameWithExtension;
   }
 
@@ -56,4 +55,28 @@ public class RequestHeaderValueExtractor {
     return contentType;
   }
 
+  // TODO Fix it so it doesn't split the body as well.
+  public String getContent(String request) {
+    Pattern pattern = Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
+    String content = pattern.split(request)[1];
+    return content;
+  }
+
+  public String getContentTypeExtension(String request) {
+    String contentType = extract("content-type", request);
+    String extension = contentType.split("\\/")[1];
+    extension = extension.replaceAll("\\r", "");
+    return extension;
+  }
+
+  public String getContentTypeHeader(String request) {
+    String requestMethod = getRequestMethod(request);
+    if (requestMethod.equals("get")) {
+      return getContentType(request);
+    } else if (requestMethod.equals("post")) {
+      return contentTypes.get(getContentTypeExtension(request));
+    } else {
+      return null;
+    }
+  }
 }
