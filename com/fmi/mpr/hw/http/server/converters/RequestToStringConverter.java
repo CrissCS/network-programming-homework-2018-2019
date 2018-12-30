@@ -2,6 +2,7 @@ package com.fmi.mpr.hw.http.server.converters;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class RequestToStringConverter {
   public String convert(InputStream input) throws IOException {
@@ -12,7 +13,7 @@ public class RequestToStringConverter {
       int bytesRead = 0;
 
       while ((bytesRead = input.read(buffer, 0, 1024)) > 0) {
-        request.append(new String(buffer, 0, bytesRead));
+        request.append(new String(buffer, 0, bytesRead, StandardCharsets.UTF_8));
 
         if (bytesRead < 1024) {
           break;

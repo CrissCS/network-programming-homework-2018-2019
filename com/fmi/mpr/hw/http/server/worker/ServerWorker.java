@@ -8,19 +8,19 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import com.fmi.mpr.hw.http.server.RequestHeaderValueExtractor;
 import com.fmi.mpr.hw.http.server.converters.RequestToStringConverter;
-import com.fmi.mpr.hw.http.server.processors.ResponseProcessor;
+import com.fmi.mpr.hw.http.server.handlers.ResponseHandler;
 
 public class ServerWorker implements Runnable {
 
   private Socket clientSocket;
   private RequestToStringConverter requestConverter;
-  private ResponseProcessor responseProcessor;
+  private ResponseHandler responseProcessor;
 
   public ServerWorker(Socket clientSocket, RequestToStringConverter requestConverter,
-      ResponseProcessor responseProcessor) {
+      ResponseHandler responseHandler) {
     this.clientSocket = clientSocket;
     this.requestConverter = requestConverter;
-    this.responseProcessor = responseProcessor;
+    this.responseProcessor = responseHandler;
   }
 
   @Override
@@ -30,8 +30,10 @@ public class ServerWorker implements Runnable {
 
       try (BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
           PrintStream out = new PrintStream(clientSocket.getOutputStream())) {
+        //Convert the request from InputStream to String
         request = requestConverter.convert(in);
-        System.err.println(request);
+        
+        //Handle and process the response
         responseProcessor.process(out, request);
       } catch (IOException e) {
         e.printStackTrace();
@@ -47,4 +49,29 @@ public class ServerWorker implements Runnable {
       }
     }
   }
+
+  public Socket getClientSocket() {
+    return clientSocket;
+  }
+
+  public void setClientSocket(Socket clientSocket) {
+    this.clientSocket = clientSocket;
+  }
+
+  public RequestToStringConverter getRequestConverter() {
+    return requestConverter;
+  }
+
+  public void setRequestConverter(RequestToStringConverter requestConverter) {
+    this.requestConverter = requestConverter;
+  }
+
+  public ResponseHandler getResponseProcessor() {
+    return responseProcessor;
+  }
+
+  public void setResponseProcessor(ResponseHandler responseProcessor) {
+    this.responseProcessor = responseProcessor;
+  }
+
 }

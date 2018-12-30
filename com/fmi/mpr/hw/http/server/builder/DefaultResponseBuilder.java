@@ -12,13 +12,11 @@ public class DefaultResponseBuilder implements ResponseBuilder {
 
   private RequestToResponseConverter requestToResponseConverter;
   private RequestHeaderValueExtractor requestHeaderValueExtractor;
-  private Map<String, String> contentTypes;
 
   public DefaultResponseBuilder(RequestToResponseConverter requestToResponseConverter,
-      RequestHeaderValueExtractor requestHeaderValueExtractor, Map<String, String> contentTypes) {
+      RequestHeaderValueExtractor requestHeaderValueExtractor) {
     this.requestToResponseConverter = requestToResponseConverter;
     this.requestHeaderValueExtractor = requestHeaderValueExtractor;
-    this.contentTypes = contentTypes;
   }
 
   @Override
@@ -40,6 +38,25 @@ public class DefaultResponseBuilder implements ResponseBuilder {
     InputStream headerInputStream = new ByteArrayInputStream(fullResponse.toString().getBytes());
     SequenceInputStream sequenceInputStream =
         new SequenceInputStream(headerInputStream, responseBody);
+
     return sequenceInputStream;
   }
+
+  public RequestToResponseConverter getRequestToResponseConverter() {
+    return requestToResponseConverter;
+  }
+
+  public void setRequestToResponseConverter(RequestToResponseConverter requestToResponseConverter) {
+    this.requestToResponseConverter = requestToResponseConverter;
+  }
+
+  public RequestHeaderValueExtractor getRequestHeaderValueExtractor() {
+    return requestHeaderValueExtractor;
+  }
+
+  public void setRequestHeaderValueExtractor(
+      RequestHeaderValueExtractor requestHeaderValueExtractor) {
+    this.requestHeaderValueExtractor = requestHeaderValueExtractor;
+  }
+
 }

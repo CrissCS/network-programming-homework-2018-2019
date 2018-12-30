@@ -1,20 +1,22 @@
-package com.fmi.mpr.hw.http.server.processors;
+package com.fmi.mpr.hw.http.server.handlers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import com.fmi.mpr.hw.http.server.builder.ResponseBuilder;
 
-public class DefaultResponseProcessor implements ResponseProcessor {
+public class DefaultResponseHandler implements ResponseHandler {
   private ResponseBuilder responseBuilder;
 
-  public DefaultResponseProcessor(ResponseBuilder responseBuilder) {
+  public DefaultResponseHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 
   @Override
   public String process(PrintStream output, String request) {
     StringBuilder fullResponse = new StringBuilder();
+
+    // Build the response
     InputStream response = responseBuilder.build(request);
     try {
       byte[] buffer = new byte[8192];
@@ -38,7 +40,6 @@ public class DefaultResponseProcessor implements ResponseProcessor {
         }
       }
     }
-    System.err.println(fullResponse.toString());
     return fullResponse.toString();
   }
 }
