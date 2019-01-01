@@ -1,4 +1,4 @@
-package com.fmi.mpr.hw.http.server.handlers;
+package com.fmi.mpr.hw.http.server.handlers.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
@@ -12,7 +12,8 @@ import java.io.SequenceInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.imageio.ImageIO;
-import com.fmi.mpr.hw.http.server.RequestHeaderValueExtractor;
+import com.fmi.mpr.hw.http.server.extractors.RequestHeaderValueExtractor;
+import com.fmi.mpr.hw.http.server.handlers.HttpRequestHandler;
 import sun.misc.BASE64Decoder;
 
 public class PostRequestHandler implements HttpRequestHandler {
@@ -24,8 +25,6 @@ public class PostRequestHandler implements HttpRequestHandler {
     File savedFile = saveToFile(request, content);
     String fileNameResponseBody = "file-name: " + savedFile.getName();
     InputStream fileNameInputStream = new ByteArrayInputStream(fileNameResponseBody.getBytes());
-    // FileInputStream fis = new FileInputStream(savedFile.getPath());
-    // SequenceInputStream sequenceInputStream = new SequenceInputStream(fileNameInputStream, fis);
     return fileNameInputStream;
   }
 

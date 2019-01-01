@@ -3,7 +3,7 @@ package com.fmi.mpr.hw.http.server.converters;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import com.fmi.mpr.hw.http.server.RequestHeaderValueExtractor;
+import com.fmi.mpr.hw.http.server.extractors.RequestHeaderValueExtractor;
 import com.fmi.mpr.hw.http.server.handlers.HttpRequestHandler;
 
 public class RequestToResponseConverter {

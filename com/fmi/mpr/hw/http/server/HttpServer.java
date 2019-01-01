@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.fmi.mpr.hw.http.server.converters.RequestToStringConverter;
-import com.fmi.mpr.hw.http.server.handlers.DefaultResponseHandler;
-import com.fmi.mpr.hw.http.server.handlers.GetRequestHandler;
+import com.fmi.mpr.hw.http.server.extractors.RequestHeaderValueExtractor;
 import com.fmi.mpr.hw.http.server.handlers.HttpRequestHandler;
-import com.fmi.mpr.hw.http.server.handlers.PostRequestHandler;
 import com.fmi.mpr.hw.http.server.handlers.ResponseHandler;
-import com.fmi.mpr.hw.http.server.builder.DefaultResponseBuilder;
+import com.fmi.mpr.hw.http.server.handlers.impl.DefaultResponseHandler;
+import com.fmi.mpr.hw.http.server.handlers.impl.GetRequestHandler;
+import com.fmi.mpr.hw.http.server.handlers.impl.PostRequestHandler;
 import com.fmi.mpr.hw.http.server.builder.ResponseBuilder;
+import com.fmi.mpr.hw.http.server.builder.impl.DefaultResponseBuilder;
 import com.fmi.mpr.hw.http.server.converters.RequestToMapConverter;
 import com.fmi.mpr.hw.http.server.converters.RequestToResponseConverter;
 import com.fmi.mpr.hw.http.server.worker.ServerWorker;
@@ -107,8 +108,4 @@ public class HttpServer {
       e.printStackTrace();
     }
   }
-
-  // public static void main(String[] args) throws IOException {
-  // new HttpServer(new ServerSocket(8080), 6).start();
-  // }
 }

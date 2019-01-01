@@ -1,9 +1,10 @@
-package com.fmi.mpr.hw.http.server.handlers;
+package com.fmi.mpr.hw.http.server.handlers.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import com.fmi.mpr.hw.http.server.builder.ResponseBuilder;
+import com.fmi.mpr.hw.http.server.handlers.ResponseHandler;
 
 public class DefaultResponseHandler implements ResponseHandler {
   private ResponseBuilder responseBuilder;
@@ -13,7 +14,7 @@ public class DefaultResponseHandler implements ResponseHandler {
   }
 
   @Override
-  public String process(PrintStream output, String request) {
+  public String handle(PrintStream output, String request) {
     StringBuilder fullResponse = new StringBuilder();
 
     // Build the response

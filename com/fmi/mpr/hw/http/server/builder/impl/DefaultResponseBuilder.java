@@ -1,12 +1,13 @@
-package com.fmi.mpr.hw.http.server.builder;
+package com.fmi.mpr.hw.http.server.builder.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.util.Map;
-import com.fmi.mpr.hw.http.server.RequestHeaderValueExtractor;
+import com.fmi.mpr.hw.http.server.builder.ResponseBuilder;
 import com.fmi.mpr.hw.http.server.converters.RequestToResponseConverter;
+import com.fmi.mpr.hw.http.server.extractors.RequestHeaderValueExtractor;
 
 public class DefaultResponseBuilder implements ResponseBuilder {
 

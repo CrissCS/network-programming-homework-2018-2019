@@ -6,21 +6,21 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import com.fmi.mpr.hw.http.server.RequestHeaderValueExtractor;
 import com.fmi.mpr.hw.http.server.converters.RequestToStringConverter;
+import com.fmi.mpr.hw.http.server.extractors.RequestHeaderValueExtractor;
 import com.fmi.mpr.hw.http.server.handlers.ResponseHandler;
 
 public class ServerWorker implements Runnable {
 
   private Socket clientSocket;
   private RequestToStringConverter requestConverter;
-  private ResponseHandler responseProcessor;
+  private ResponseHandler responseHandler;
 
   public ServerWorker(Socket clientSocket, RequestToStringConverter requestConverter,
       ResponseHandler responseHandler) {
     this.clientSocket = clientSocket;
     this.requestConverter = requestConverter;
-    this.responseProcessor = responseHandler;
+    this.responseHandler = responseHandler;
   }
 
   @Override
@@ -30,11 +30,11 @@ public class ServerWorker implements Runnable {
 
       try (BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
           PrintStream out = new PrintStream(clientSocket.getOutputStream())) {
-        //Convert the request from InputStream to String
+        // Convert the request from InputStream to String
         request = requestConverter.convert(in);
-        
-        //Handle and process the response
-        responseProcessor.process(out, request);
+
+        // Handle and process the response
+        responseHandler.handle(out, request);
       } catch (IOException e) {
         e.printStackTrace();
       } finally {
@@ -67,11 +67,11 @@ public class ServerWorker implements Runnable {
   }
 
   public ResponseHandler getResponseProcessor() {
-    return responseProcessor;
+    return responseHandler;
   }
 
   public void setResponseProcessor(ResponseHandler responseProcessor) {
-    this.responseProcessor = responseProcessor;
+    this.responseHandler = responseProcessor;
   }
 
 }

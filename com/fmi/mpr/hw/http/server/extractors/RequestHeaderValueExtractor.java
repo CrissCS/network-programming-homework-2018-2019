@@ -1,4 +1,4 @@
-package com.fmi.mpr.hw.http.server;
+package com.fmi.mpr.hw.http.server.extractors;
 
 import java.util.Map;
 import java.util.regex.Pattern;

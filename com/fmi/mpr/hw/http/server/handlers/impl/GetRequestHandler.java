@@ -1,11 +1,12 @@
-package com.fmi.mpr.hw.http.server.handlers;
+package com.fmi.mpr.hw.http.server.handlers.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import com.fmi.mpr.hw.http.server.RequestHeaderValueExtractor;
+import com.fmi.mpr.hw.http.server.extractors.RequestHeaderValueExtractor;
+import com.fmi.mpr.hw.http.server.handlers.HttpRequestHandler;
 
 public class GetRequestHandler implements HttpRequestHandler {
   private RequestHeaderValueExtractor requestHeaderValueExtractor;
